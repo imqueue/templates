@@ -1,0 +1,84 @@
+{
+  "name": "%SERVICE_NAME",
+  "version": "%SERVICE_VERSION",
+  "description": "%SERVICE_DESCRIPTION",
+  "keywords": [],
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "tsc",
+    "mocha": "nyc mocha",
+    "show:test": "/usr/bin/env node -e \"require('opn')('file://`pwd`/coverage/index.html',{wait:false});\"",
+    "show:doc": "/usr/bin/env node -e \"require('opn')('file://`pwd`/docs/index.html',{wait:false});\"",
+    "test": "npm run build && npm run mocha && npm run show:test",
+    "clean:dts": "find . -name '*.d.ts' -not -wholename '*node_modules*' -type f -delete",
+    "clean:map": "find . -name '*.js.map' -not -wholename '*node_modules*' -type f -delete",
+    "clean:js": "find . -name '*.js' -not -wholename '*node_modules*' -type f -delete",
+    "clean:test": "rm -rf .nyc_output coverage",
+    "clean:doc": "rm -rf docs",
+    "clean": "npm run clean:tests && npm run clean:dts && npm run clean:map && npm run clean:js && npm run clean:doc",
+    "doc": "npm run clean:doc && typedoc --excludePrivate --excludeExternals --hideGenerator --exclude \"**/+(debug|test|node_modules|docs|coverage|.nyc_output)/**/*\" --mode file --out ./docs . && npm run show:doc",
+    "start": "NODE_ENV=production /usr/bin/env node ./index.js",
+    "dev": "npm run build && NODE_ENV=development /usr/bin/env node ./index.js",
+    "docker:build": "docker build -f Dockerfile -t %SERVICE_NAME .",
+    "docker:run": "docker run --rm -it --name %SERVICE_NAME %SERVICE_NAME",
+    "docker:stop": "docker stop %SERVICE_NAME",
+    "docker:ssh": "docker exec -it %SERVICE_NAME sh"
+  },
+  "repository": {
+    "type": "%SERVICE_REPO_TYPE",
+    "url": "%SERVICE_REPO_URL"
+  },
+  "bugs": {
+    "url": "%SERVICE_BUGS_URL"
+  },
+  "homepage": "%SERVICE_HOME_URL",
+  "author": "%SERVICE_AUTHOR_NAME %SERVICE_SUTHOR_EMAIL %SERVICE_AUTHOR_URL",
+  "license": "%SERVICE_LICENSE",
+  "dependencies": {
+    "imq-rpc": "*",
+    "dotenv": "*"
+  },
+  "devDependencies": {
+    "@types/chai": "*",
+    "@types/dotenv": "*",
+    "@types/mocha": "*",
+    "@types/mock-require": "*",
+    "@types/node": "*",
+    "@types/sinon": "*",
+    "chai": "*",
+    "mocha": "*",
+    "mocha-lcov-reporter": "*",
+    "mock-require": "*",
+    "nyc": "*",
+    "opn": "*",
+    "reflect-metadata": "*",
+    "sinon": "*",
+    "source-map-support": "*",
+    "ts-node": "*",
+    "typedoc": "*",
+    "typescript": "*"
+  },
+  "main": "index.js",
+  "typescript": {
+    "definitions": "index.d.ts"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "extension": [
+      ".ts"
+    ],
+    "exclude": [
+      "**/*.d.ts",
+      "**/test/**"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "html",
+      "text",
+      "text-summary",
+      "lcovonly"
+    ]
+  }
+}

@@ -1,0 +1,2 @@
+%SERVICE_LICENSE_HEADER
+export * from './%SERVICE_CLASS_NAME';
