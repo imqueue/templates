@@ -16,10 +16,6 @@ To start service in development mode, run:
 npm run dev
 ~~~
 
-## API
-
-%SERVICE_API_MD
-
 ## License
 
 [%LICENSE_NAME](LICENSE)
