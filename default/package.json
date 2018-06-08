@@ -24,15 +24,10 @@
     "docker:stop": "docker stop %SERVICE_NAME",
     "docker:ssh": "docker exec -it %SERVICE_NAME sh"
   },
-  "repository": {
-    "type": "%SERVICE_REPO_TYPE",
-    "url": "%SERVICE_REPO_URL"
-  },
-  "bugs": {
-    "url": "%SERVICE_BUGS_URL"
-  },
-  "homepage": "%SERVICE_HOME_URL",
-  "author": "%SERVICE_AUTHOR_NAME %SERVICE_SUTHOR_EMAIL %SERVICE_AUTHOR_URL",
+  %SERVICE_REPO
+  %SERVICE_BUGS
+  %SERVICE_HOMEPAGE
+  "author": "%SERVICE_AUTHOR_NAME %SERVICE_AUTHOR_EMAIL",
   "license": "%SERVICE_LICENSE",
   "dependencies": {
     "imq-rpc": "*",
