@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- %TRAVIS_NODE_TAG
+%TRAVIS_NODE_TAG
 services:
 - docker
 after_success:
