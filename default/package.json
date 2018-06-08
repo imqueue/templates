@@ -23,10 +23,7 @@
     "docker:run": "docker run --rm -it --name %SERVICE_NAME %SERVICE_NAME",
     "docker:stop": "docker stop %SERVICE_NAME",
     "docker:ssh": "docker exec -it %SERVICE_NAME sh"
-  },
-  %SERVICE_REPO
-  %SERVICE_BUGS
-  %SERVICE_HOMEPAGE
+  }, %SERVICE_REPO%SERVICE_BUGS%SERVICE_HOMEPAGE
   "author": "%SERVICE_AUTHOR_NAME %SERVICE_AUTHOR_EMAIL",
   "license": "%SERVICE_LICENSE",
   "dependencies": {
