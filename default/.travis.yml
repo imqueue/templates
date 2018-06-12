@@ -28,5 +28,4 @@ after_success:
   fi
 env:
   global:
-  %DOCKER_USER_SECRET
-  %DOCKER_PASS_SECRET
+  %DOCKER_SECRETS
