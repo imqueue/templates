@@ -1,4 +1,4 @@
-%SERVICE_LICENSE_HEADER
+%LICENSE_HEADER
 import { IMQServiceOptions } from 'imq-rpc';
 import { config as initEnvironment } from 'dotenv';
 

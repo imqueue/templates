@@ -25,7 +25,7 @@
     "docker:ssh": "docker exec -it %SERVICE_NAME sh"
   }, %SERVICE_REPO%SERVICE_BUGS%SERVICE_HOMEPAGE
   "author": "%SERVICE_AUTHOR_NAME %SERVICE_AUTHOR_EMAIL",
-  "license": "%SERVICE_LICENSE",
+  "license": "%LICENSE_TAG",
   "dependencies": {
     "imq-rpc": "*",
     "dotenv": "*"

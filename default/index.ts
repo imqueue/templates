@@ -1,4 +1,4 @@
-%SERVICE_LICENSE_HEADER
+%LICENSE_HEADER
 import { serviceOptions } from './config';
 import { %SERVICE_CLASS_NAME } from './src';
 
