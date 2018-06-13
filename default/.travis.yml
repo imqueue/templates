@@ -1,7 +1,7 @@
 language: node_js
 node_js:
 %TRAVIS_NODE_TAG
-%{IF_DOCKER_CI}services:
+services:
 - docker
 after_success:
 - export DOCKER_REPO="%DOCKER_NAMESPACE/%SERVICE_NAME"
@@ -29,4 +29,3 @@ after_success:
 env:
   global:
   %DOCKER_SECRETS
-%{END_IF_DOCKER_CI}
