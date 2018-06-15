@@ -1,6 +1,7 @@
-# Templates for IMQ-CLI
+# Templates for @imqueue/cli
 
-Templates are used by IMQ-CLI to create service boilerplate packages.
+Templates are used by `@imqueue/cli` module to create service boilerplate 
+packages.
 
 ## License
 

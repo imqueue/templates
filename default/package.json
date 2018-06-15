@@ -27,7 +27,7 @@
   "author": "%SERVICE_AUTHOR_NAME %SERVICE_AUTHOR_EMAIL",
   "license": "%LICENSE_TAG",
   "dependencies": {
-    "imq-rpc": "*",
+    "@imqueue/rpc": "*",
     "dotenv": "*"
   },
   "devDependencies": {
