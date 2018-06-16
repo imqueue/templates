@@ -1,5 +1,5 @@
 %LICENSE_HEADER
-import { IMQServiceOptions } from 'imq-rpc';
+import { IMQServiceOptions } from '@imqueue/rpc';
 import { config as initEnvironment } from 'dotenv';
 
 initEnvironment();
