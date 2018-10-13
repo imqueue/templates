@@ -37,3 +37,4 @@ debug*
 Dockerfile
 Thumbs.db
 tsconfig.json
+nodemon.json
