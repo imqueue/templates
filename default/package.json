@@ -23,7 +23,8 @@
     "docker:build": "docker build -f Dockerfile -t %SERVICE_NAME .",
     "docker:run": "docker run --rm -it --name %SERVICE_NAME %SERVICE_NAME",
     "docker:stop": "docker stop %SERVICE_NAME",
-    "docker:ssh": "docker exec -it %SERVICE_NAME sh"
+    "docker:ssh": "docker exec -it %SERVICE_NAME sh",
+    "help": "npm-scripts-help"
   }, %SERVICE_REPO%SERVICE_BUGS%SERVICE_HOMEPAGE
   "author": "%SERVICE_AUTHOR_NAME %SERVICE_AUTHOR_EMAIL",
   "license": "%LICENSE_TAG",
@@ -43,6 +44,7 @@
     "mocha-lcov-reporter": "*",
     "mock-require": "*",
     "nodemon": "*",
+    "npm-scripts-help": "*",
     "nyc": "*",
     "opn": "*",
     "reflect-metadata": "*",

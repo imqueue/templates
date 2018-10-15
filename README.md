@@ -18,7 +18,7 @@ integrated with the set of tools for:
 - **Continuous integration**: Travis CI
 - **Development**: typescript, ts-node, source-map-support, reflect-metadata, nodemon
 - **Documentation**: typedoc
-- **Builds**: npm scripts
+- **Builds**: npm scripts, `npm run help` for more details after boilerplate installation
 
 ## License
 
