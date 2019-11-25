@@ -1,5 +1,5 @@
 ############### 1. BASE STAGE ###############
-FROM node:FROM node:%NODE_DOCKER_TAG-alpine AS base
+FROM node:%NODE_DOCKER_TAG-alpine AS base
 
 RUN apk update
 RUN apk --no-cache add -qU dbus
