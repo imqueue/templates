@@ -32,4 +32,4 @@ FROM base AS release
 COPY --from=build /opt/app .
 
 # Execute service
-CMD [ "sh", "-c", "MUID=`dbus-uuidgen` ; echo $MUID > /etc/machine-id ; echo $MUID > /var/lib/dbus/machine-id ; service ssh start; npm start" ]
+CMD [ "sh", "-c", "MUID=`dbus-uuidgen` ; echo $MUID > /etc/machine-id ; echo $MUID > /var/lib/dbus/machine-id ; npm start" ]
