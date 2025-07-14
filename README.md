@@ -22,4 +22,5 @@ integrated with the set of tools for:
 
 ## License
 
-[ISC](https://github.com/imqueue/templates/blob/master/LICENSE)
+This project is licensed under the GNU General Public License v3.0.
+See the [LICENSE](LICENSE)
