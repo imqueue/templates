@@ -3,30 +3,31 @@
   "version": "%SERVICE_VERSION",
   "description": "%SERVICE_DESCRIPTION",
   "keywords": [],
+  "type": "module",
+  "main": "index.js",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
-    "prepublish": "npm run build",
-    "build": "tsc",
-    "mocha": "nyc mocha",
-    "show:test": "/usr/bin/env node -e \"import('open').then(open => open.default('file://`pwd`/coverage/index.html',{wait:false}));\"",
-    "show:doc": "/usr/bin/env node -e \"import('open').then(open => open.default('file://`pwd`/docs/index.html',{wait:false}));\"",
-    "test": "npm run build && npm run mocha",
+    "prepublishOnly": "npm run build",
+    "build": "npm run clean:compiled && tsc",
+    "test": "npm run build && node --test --test-timeout=15000 $(find test -name '*.spec.js')",
+    "test:coverage": "npm run build && node --enable-source-maps --test --experimental-test-coverage --test-timeout=15000 $(find test -name '*.spec.js')",
     "clean:dts": "find . -name '*.d.ts' -not -wholename '*node_modules*' -type f -delete",
     "clean:map": "find . -name '*.js.map' -not -wholename '*node_modules*' -type f -delete",
     "clean:js": "find . -name '*.js' -not -wholename '*node_modules*' -type f -delete",
+    "clean:compiled": "npm run clean:js && npm run clean:dts && npm run clean:map",
     "clean:build": "rm -rf ./node_modules/@types ; find . -name '*.js.map' -type f -delete ; find . -name '*.ts' -type f -delete",
-    "clean:test": "rm -rf .nyc_output coverage",
-    "clean:doc": "rm -rf docs",
-    "clean": "npm run clean:test && npm run clean:dts && npm run clean:map && npm run clean:js && npm run clean:doc",
-    "doc": "npm run clean:doc && typedoc --excludePrivate --excludeExternals --hideGenerator --exclude \"**/+(debug|test|node_modules|docs|coverage|.nyc_output)/**/*\" --out ./docs . && npm run show:doc",
+    "clean:test": "rm -rf coverage",
+    "clean": "npm run clean:test && npm run clean:compiled",
     "start": "NODE_ENV=production /usr/bin/env node ./index.js LABEL=%SERVICE_NAME",
     "stop": "kill -s TERM $(ps aux | grep 'LABEL=%SERVICE_NAME' | awk '{print $2}')",
-    "dev:ts": "NODE_ENV=development ts-node index.ts LABEL=%SERVICE_NAME",
-    "dev": "npm run clean:dts && npm run clean:map && npm run clean:js && LABEL=%SERVICE_NAME ./node_modules/nodemon/bin/nodemon.js",
+    "dev:run": "npm run build && LABEL=%SERVICE_NAME /usr/bin/env node ./index.js",
+    "dev": "./node_modules/nodemon/bin/nodemon.js",
     "docker:build": "tsc && docker build -f Dockerfile -t %SERVICE_NAME .",
     "docker:run": "docker run --rm -it --name %SERVICE_NAME %SERVICE_NAME",
     "docker:stop": "docker stop %SERVICE_NAME",
     "docker:ssh": "docker exec -it %SERVICE_NAME sh",
-    "help": "npm-scripts-help",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "format:check": "oxfmt --check",
@@ -42,67 +43,17 @@
   "author": "%SERVICE_AUTHOR_NAME %SERVICE_AUTHOR_EMAIL",
   "license": "%LICENSE_TAG",
   "dependencies": {
-    "@types/node": "*",
-    "@imqueue/rpc": "*",
     "@imqueue/core": "*",
-    "dotenv": "*",
+    "@imqueue/rpc": "*",
     "reflect-metadata": "*",
     "typescript": "*"
   },
   "devDependencies": {
-    "@types/chai": "*",
-    "@types/dotenv": "*",
-    "@types/mocha": "*",
-    "@types/mock-require": "*",
-    "@types/sinon": "*",
-    "chai": "*",
-    "mocha": "*",
-    "mocha-lcov-reporter": "*",
-    "mock-require": "*",
-    "nodemon": "*",
-    "npm-scripts-help": "*",
-    "nyc": "*",
-    "open": "*",
-    "sinon": "*",
-    "source-map-support": "*",
+    "@types/node": "*",
     "husky": "*",
     "lint-staged": "*",
+    "nodemon": "*",
     "oxfmt": "*",
-    "oxlint": "*",
-    "ts-node": "*",
-    "typedoc": "*"
-  },
-  "main": "index.js",
-  "typescript": {
-    "definitions": "index.d.ts"
-  },
-  "mocha": {
-    "require": [
-      "ts-node/register",
-      "source-map-support/register"
-    ],
-    "recursive": true,
-    "bail": true,
-    "full-trace": true,
-    "exit": true
-  },
-  "nyc": {
-    "check-coverage": true,
-    "extension": [
-      ".ts"
-    ],
-    "exclude": [
-      "**/*.d.ts",
-      "**/test/**"
-    ],
-    "require": [
-      "ts-node/register"
-    ],
-    "reporter": [
-      "html",
-      "text",
-      "text-summary",
-      "lcovonly"
-    ]
+    "oxlint": "*"
   }
 }

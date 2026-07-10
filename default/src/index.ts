@@ -1,2 +1,2 @@
 %LICENSE_HEADER
-export * from './%SERVICE_CLASS_NAME';
+export * from './%SERVICE_CLASS_NAME.js';

@@ -1,10 +1,13 @@
 %LICENSE_HEADER
-import { serviceOptions } from './config';
-import { %SERVICE_CLASS_NAME } from './src';
+import { fileURLToPath } from 'node:url';
+import { serviceOptions } from './config.js';
+import { %SERVICE_CLASS_NAME } from './src/index.js';
 
-export * from './src';
+export * from './src/index.js';
 
-!module.parent && (async () => {
-    const service = new %SERVICE_CLASS_NAME(serviceOptions);
-    await service.start();
-})();
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+    (async () => {
+        const service = new %SERVICE_CLASS_NAME(serviceOptions);
+        await service.start();
+    })();
+}

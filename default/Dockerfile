@@ -18,7 +18,7 @@ FROM base AS build
 # Install app dependencies
 COPY package*.json ./
 RUN npm set progress=false
-RUN npm i --production
+RUN npm ci --omit=dev --ignore-scripts
 
 # Bundle app package files
 COPY . .
