@@ -1,0 +1,5 @@
+{
+  "version": 2,
+  "description": "Default @imqueue service template (ESM, TS, node:test)",
+  "ciFiles": "provider"
+}

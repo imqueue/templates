@@ -9,7 +9,7 @@ try {
 }
 
 /* check environments variables if required to bypass secrets */
-
+%ADDON_CONFIG
 export const serviceOptions: Partial<IMQServiceOptions> = {
     /* define your service-specific options here */
 };
