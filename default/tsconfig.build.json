@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "rootDir": ".",
+    "outDir": "build"
+  },
+  "include": ["index.ts", "config.ts", "env-defaults.ts", "src"]
+}

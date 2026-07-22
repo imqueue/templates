@@ -11,7 +11,10 @@
   "scripts": {
     "prepublishOnly": "npm run build",
     "build": "npm run clean:compiled && tsc",
+    "build:bundle": "rm -rf build && tsc -p tsconfig.build.json && cp -R bin build/bin",
+    "typecheck": "tsc --noEmit",
     "test": "npm run build && node --test --test-timeout=15000 $(find test -name '*.spec.js')",
+    "test:unit": "npm run test",
     "test:coverage": "npm run build && node --enable-source-maps --test --experimental-test-coverage --test-timeout=15000 $(find test -name '*.spec.js')",
     "clean:dts": "find . -name '*.d.ts' -not -wholename '*node_modules*' -type f -delete",
     "clean:map": "find . -name '*.js.map' -not -wholename '*node_modules*' -type f -delete",
@@ -24,7 +27,7 @@
     "stop": "kill -s TERM $(ps aux | grep 'LABEL=%SERVICE_NAME' | awk '{print $2}')",
     "dev:run": "npm run build && LABEL=%SERVICE_NAME /usr/bin/env node ./index.js",
     "dev": "./node_modules/nodemon/bin/nodemon.js",
-    "docker:build": "tsc && docker build -f Dockerfile -t %SERVICE_NAME .",
+    "docker:build": "npm run build:bundle && docker build -f Dockerfile -t %SERVICE_NAME .",
     "docker:run": "docker run --rm -it --name %SERVICE_NAME %SERVICE_NAME",
     "docker:stop": "docker stop %SERVICE_NAME",
     "docker:ssh": "docker exec -it %SERVICE_NAME sh",
@@ -43,10 +46,12 @@
   "author": "%SERVICE_AUTHOR_NAME %SERVICE_AUTHOR_EMAIL",
   "license": "%LICENSE_TAG",
   "dependencies": {
+    "@imqueue/async-logger": "*",
     "@imqueue/core": "*",
     "@imqueue/rpc": "*",
     "reflect-metadata": "*",
-    "typescript": "*"
+    "typescript": "*",
+    "zod": "*"
   },
   "devDependencies": {
     "@types/node": "*",

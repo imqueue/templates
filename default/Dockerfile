@@ -1,35 +1,27 @@
-############### 1. BASE STAGE ###############
-FROM node:%NODE_DOCKER_TAG-alpine AS base
+FROM node:%NODE_DOCKER_TAG-alpine
 
-RUN apk update
-RUN apk --no-cache add -qU dbus
+WORKDIR /app
 
-# Environment variables
-ENV PATH /opt/app/node_modules/.bin:$PATH
+RUN apk add --no-cache dbus
 
-# Create app directory
-RUN mkdir -p /opt/app
-WORKDIR /opt/app
+# Install production dependencies against the committed lockfile.
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev --no-audit --no-fund && npm cache clean --force
 
+# Copy the pre-built deploy bundle produced by `npm run build:bundle`
+# (in CI this is the artifact built and verified by the build job).
+COPY build/ ./
 
-############### 2. BUILD STAGE ###############
-FROM base AS build
+# Seed a stable machine id so the entrypoint can rewrite it at start-up.
+RUN MACHINE_UID="$(dbus-uuidgen)" \
+    && echo "$MACHINE_UID" > /etc/machine-id \
+    && echo "$MACHINE_UID" > /var/lib/dbus/machine-id \
+    && chmod ugo+rw /etc/machine-id /var/lib/dbus/machine-id
 
-# Install app dependencies
-COPY package*.json ./
-RUN npm set progress=false
-RUN npm ci --omit=dev --ignore-scripts
+ENV NODE_ENV=production
 
-# Bundle app package files
-COPY . .
-RUN npm run clean:build
+EXPOSE 9090
 
+USER node
 
-############### 3. RELEASE STAGE ###############
-FROM base AS release
-
-# Copy pre-built code
-COPY --from=build /opt/app .
-
-# Execute service
-CMD [ "sh", "-c", "MUID=`dbus-uuidgen` ; echo $MUID > /etc/machine-id ; echo $MUID > /var/lib/dbus/machine-id ; npm start" ]
+ENTRYPOINT ["sh", "bin/entrypoint.sh"]
