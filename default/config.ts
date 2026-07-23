@@ -29,9 +29,6 @@ const positiveInt = (defaultValue: number) =>
 const EnvSchema = z.object({
     SERVICE_NAME: z.string().default('%SERVICE_NAME'),
 
-    /* Google Cloud — presence of credentials enables GCP integrations. */
-    GOOGLE_APPLICATION_CREDENTIALS: z.string().optional(),
-
     /* @imqueue transport (Redis) */
     IMQ_USERNAME: z.string().optional(),
     IMQ_PASSWORD: z.string().optional(),
@@ -115,9 +112,6 @@ function buildConfig(env: Env) {
     return {
         serviceName: env.SERVICE_NAME,
         logger,
-        gcp: {
-            enabled: Boolean(env.GOOGLE_APPLICATION_CREDENTIALS),
-        },
         cache: {
             host: env.IMQ_CACHE_HOST,
             port: env.IMQ_CACHE_PORT,
