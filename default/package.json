@@ -6,7 +6,7 @@
   "type": "module",
   "main": "index.js",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=24"
   },
   "scripts": {
     "prepublishOnly": "npm run build",
