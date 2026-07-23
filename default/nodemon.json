@@ -1,6 +1,0 @@
-{
-  "ignore": ["test/**", ".git", "node_modules", "**/*.d.ts", "**/*.js", "**/*.js.map"],
-  "watch": ["src", "index.ts", "config.ts"],
-  "exec": "npm run dev:run",
-  "ext": "ts"
-}

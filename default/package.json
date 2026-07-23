@@ -25,8 +25,7 @@
     "clean": "npm run clean:test && npm run clean:compiled",
     "start": "NODE_ENV=production /usr/bin/env node ./index.js LABEL=%SERVICE_NAME",
     "stop": "kill -s TERM $(ps aux | grep 'LABEL=%SERVICE_NAME' | awk '{print $2}')",
-    "dev:run": "npm run build && LABEL=%SERVICE_NAME /usr/bin/env node ./index.js",
-    "dev": "./node_modules/nodemon/bin/nodemon.js",
+    "dev": "LABEL=%SERVICE_NAME node --watch --env-file-if-exists=.env --import tsx index.ts",
     "docker:build": "npm run build:bundle && docker build -f Dockerfile -t %SERVICE_NAME .",
     "docker:run": "docker run --rm -it --name %SERVICE_NAME %SERVICE_NAME",
     "docker:stop": "docker stop %SERVICE_NAME",
@@ -47,7 +46,6 @@
   "license": "%LICENSE_TAG",
   "dependencies": {
     "@imqueue/async-logger": "*",
-    "@imqueue/core": "*",
     "@imqueue/rpc": "*",
     "reflect-metadata": "*",
     "typescript": "*",
@@ -57,8 +55,8 @@
     "@types/node": "*",
     "husky": "*",
     "lint-staged": "*",
-    "nodemon": "*",
     "oxfmt": "*",
-    "oxlint": "*"
+    "oxlint": "*",
+    "tsx": "*"
   }
 }
