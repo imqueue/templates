@@ -1,14 +1,23 @@
 {
   "version": 1,
   "groups": {
-    "tracing": { "title": "Tracing / APM", "exclusive": true },
-    "orm": { "title": "ORM / database", "exclusive": true },
+    "tracing": {
+      "title": "Tracing / APM",
+      "exclusive": true,
+      "pick": "Only if the service is traced — none is normal."
+    },
+    "orm": {
+      "title": "ORM / database",
+      "exclusive": true,
+      "pick": "Only if the service uses a database — none is normal."
+    },
     "features": { "title": "Service features", "exclusive": false }
   },
   "packages": {
     "opentelemetry": {
       "group": "tracing",
       "title": "OpenTelemetry instrumentation",
+      "pick": "Recommended: vendor-neutral, so the backend can change without touching service code.",
       "deps": {
         "@imqueue/opentelemetry-instrumentation-imqueue": "*",
         "@opentelemetry/api": "*",
@@ -36,6 +45,8 @@
     "dd-trace": {
       "group": "tracing",
       "title": "Datadog APM (dd-trace)",
+      "hint": "already on Datadog",
+      "pick": "For a fleet already standing on Datadog\u2019s own agent; otherwise take opentelemetry.",
       "deps": { "@imqueue/dd-trace": "*" },
       "snippets": { "preload": "import '@imqueue/dd-trace';" },
       "env": ["DD_AGENT_HOST", "DD_TRACE_ENABLED"],
@@ -45,24 +56,18 @@
     },
     "sequelize": {
       "group": "orm",
-      "title": "Sequelize ORM",
+      "title": "Sequelize ORM + @imqueue/sequelize toolkit",
+      "hint": "match a Sequelize fleet",
+      "pick": "For a service joining a fleet already built on Sequelize, where matching the existing stack is worth more than the default. Migrating the fleet to pg-prisma is worth proposing, as separate work.",
       "deps": { "@imqueue/sequelize": "*", "sequelize": "*" },
       "instructions": [
         "Sequelize: configure your database connection in config.ts."
       ]
     },
-    "prisma": {
-      "group": "orm",
-      "title": "Prisma ORM",
-      "deps": { "@prisma/client": "*" },
-      "devDeps": { "prisma": "*" },
-      "instructions": [
-        "Prisma: run `npx prisma init` and define your schema."
-      ]
-    },
     "pg-prisma": {
       "group": "orm",
       "title": "Prisma ORM + @imqueue/pg-prisma toolkit",
+      "pick": "Recommended. Take this unless the fleet the service joins is already built on Sequelize.",
       "deps": {
         "@imqueue/pg-prisma": "*",
         "@imqueue/validation": "*",
