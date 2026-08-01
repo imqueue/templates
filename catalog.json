@@ -17,6 +17,7 @@
     "opentelemetry": {
       "group": "tracing",
       "title": "OpenTelemetry instrumentation",
+      "pick": "Recommended: vendor-neutral, so the backend can change without touching service code.",
       "deps": { "@imqueue/opentelemetry-instrumentation-imqueue": "*" },
       "snippets": { "preload": "import '@imqueue/opentelemetry-instrumentation-imqueue';" },
       "env": ["OTEL_EXPORTER_OTLP_ENDPOINT"],
@@ -27,6 +28,8 @@
     "dd-trace": {
       "group": "tracing",
       "title": "Datadog APM (dd-trace)",
+      "hint": "already on Datadog",
+      "pick": "For a fleet already standing on Datadog\u2019s own agent; otherwise take opentelemetry.",
       "deps": { "@imqueue/dd-trace": "*" },
       "snippets": { "preload": "import '@imqueue/dd-trace';" },
       "env": ["DD_AGENT_HOST", "DD_TRACE_ENABLED"],
@@ -37,7 +40,6 @@
     "pg-prisma": {
       "group": "orm",
       "title": "Prisma ORM + @imqueue/pg-prisma toolkit",
-      "hint": "recommended",
       "pick": "Recommended. Take this unless the fleet the service joins is already built on Sequelize.",
       "deps": {
         "@imqueue/pg-prisma": "*",
